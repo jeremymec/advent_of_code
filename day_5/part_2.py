@@ -1,6 +1,7 @@
 f = open("data", "r")
 data = f.readlines()
 
+seat_ids = []
 highest_seat_id = 0
 
 for boarding_pass in data:
@@ -32,8 +33,19 @@ for boarding_pass in data:
     # print("Column is", column)
 
     seat_id = (row * 8) + column
-    
+        
     if seat_id > highest_seat_id:
         highest_seat_id = seat_id
 
-print(highest_seat_id)
+    seat_ids.append(seat_id)
+
+for seat_id in range(1, highest_seat_id):
+    try:
+        seat_ids.index(seat_id)
+    except ValueError:
+        try:
+            seat_ids.index(seat_id + 1)
+            seat_ids.index(seat_id - 1)
+            print(seat_id)
+        except ValueError:
+            continue
